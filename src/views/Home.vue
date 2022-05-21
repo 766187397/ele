@@ -129,9 +129,9 @@ export default {
       this.$axios
         .post(`/api/profile/restaurants/${this.page}/${this.size}`, this.data)
         .then((res) => {
-          // console.log(res.data);
-          this.$refs.loadmore.onTopLoaded();
+          console.log(res.data);
           this.restaurants = res.data;
+          this.$refs.loadmore.onTopLoaded();
         });
     },
     loadMore() {
@@ -142,7 +142,6 @@ export default {
           .post(`/api/profile/restaurants/${this.page}/${this.size}`)
           .then((res) => {
             //  加载完之后重新渲染
-            this.$refs.loadmore.onBottomLoaded();
             if (res.data.length > 0) {
               res.data.forEach((item) => {
                 this.restaurants.push(item);
@@ -156,6 +155,7 @@ export default {
               this.allLoaded = true;
               this.bottomPullText = "没有更多了哦";
             }
+            this.$refs.loadmore.onBottomLoaded();
           });
       }
     },
@@ -284,8 +284,7 @@ export default {
   top: 0px;
   z-index: 999;
 }
-
-.mint-loadmore {
+.mint-loadmore-content {
   height: calc(100% - 95px);
   overflow: auto;
 }
